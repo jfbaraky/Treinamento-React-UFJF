@@ -1,18 +1,21 @@
 import React, {Component} from 'react';
 import Post from './post';
 import PostCreator from './postCreator';
-
+import axios from 'axios';
+import CircularProgress from '@material-ui/core/CircularProgress';
 class Timeline extends Component { 
     constructor(){
       super();
       this.state = {
-        posts: []
+        posts: [],
+        loading: false
       }
     }
 
     componentDidMount(){
       console.log('App did mount');
-      this.readFromStorage();
+      // this.readFromStorage();
+      this.readFromAPI(); 
     }
 
 
@@ -23,11 +26,26 @@ class Timeline extends Component {
       this.saveInStorage();
     }
 
+    saveInAPI(post){
+      this.setState({loading: true});
+      axios.post('http://localhost:3001/posts', post).then(response => {
+        const myPosts = this.state.posts;
+        myPosts.unshift(response.data);
+        this.setState({posts: myPosts, loading: false});
+      })
+    }
+
     readFromStorage(){
       const savedPosts = localStorage.getItem('savedPosts');
       if(savedPosts){
         this.setState({posts: JSON.parse(savedPosts)});
       }
+    }
+
+    readFromAPI(){
+      axios.get('http://localhost:3001/posts').then(response => {
+        this.setState({posts: response.data});
+      })
     }
 
     saveInStorage(){
@@ -45,20 +63,24 @@ class Timeline extends Component {
       return(
         <div>
           <h1>Minhaf rede social</h1>
-          <PostCreator onCreate={this.insertPost.bind(this)} />
+          <PostCreator isLoading={this.state.loading}
+          onCreate={this.saveInAPI.bind(this)} />
           <button
            onClick={
             ()=>this.props.history.push('/sobre')
            } 
           >Ver sobre</button>
-          {this.state.posts.map((post,i) => {
+          {this.state.posts.length > 0 
+          ? this.state.posts.map((post,i) => {
             return (
               <Post 
               onNavigate={() => this.onNavigate(post)}
               key={post.time} 
               post={post}/>
             )
-          })}
+          })
+            : <CircularProgress />            
+          }
       
         </div>
       )

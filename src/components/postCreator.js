@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { CircularProgress } from '@material-ui/core';
 
 class PostCreator extends Component {
     constructor(){
@@ -29,9 +30,12 @@ class PostCreator extends Component {
                 }}
                 value={this.state.text}
                 style={{width: '100%'}} />
-                <button onClick={()=>this.createPost()}>
-                    Postar
-                </button>
+                {this.props.isLoading
+                ? <CircularProgress />
+                : <button onClick={()=>this.createPost()}>
+                Postar
+            </button>}
+                
             </div>
         )
     }

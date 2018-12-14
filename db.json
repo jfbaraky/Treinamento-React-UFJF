@@ -1,0 +1,25 @@
+{
+  "posts": [
+    {
+      "content": "<i>Teste</i>",
+      "author": "Baraky",
+      "time": 1544644024913,
+      "initialLikes": 0,
+      "id": 1
+    },
+    {
+      "content": "Post no banco de dados",
+      "author": "Baraky",
+      "time": 1544817794449,
+      "initialLikes": 0,
+      "id": 2
+    },
+    {
+      "content": "Novo post",
+      "author": "Baraky",
+      "time": 1544818130472,
+      "initialLikes": 0,
+      "id": 3
+    }
+  ]
+}

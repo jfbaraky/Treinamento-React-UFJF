@@ -22,7 +22,6 @@ class App extends Component {
       )
       return page;
     }
-  
     render(){
       return(
         <div>

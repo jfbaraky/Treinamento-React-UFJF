@@ -1,4 +1,12 @@
 import React, {Component} from 'react';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import LikeIcon from '@material-ui/icons/ThumbUp'
+import Avatar from '@material-ui/core/Avatar';
 import "../post.css";
 
 class Post extends Component {
@@ -31,31 +39,36 @@ class Post extends Component {
         const post = this.props.post;
         console.log(this.props);
         return(
-            <div className={"post"}>
-                <h3 
-                  onClick={()=>this.props.onNavigate()} 
+            <Card style={{margin: 10}}>
+            <CardContent>
+            <Avatar >{post.author.slice(0,2).toUpperCase()}</Avatar>
+                <Typography 
+                    variant="h5" 
+                    component="h2"
+                onClick={()=>this.props.onNavigate()} 
                   style={{cursor:'pointer'}}
                   >
+                  
                 {post.content}
-                </h3>
-                <h5>{post.author}</h5>
+                </Typography>
+                <Typography 
+                    color="textSecondary"
+                    variant="h5" 
+                    component="h5">
+                    {post.author}
+                    </Typography>
                 <small>{post.time}</small>
+                </CardContent>
+                <CardActions>
                 <div style={likeLine}>
                     <p>Likes: {this.state.likes}</p>
-                    <button 
-                        onClick={this.doLike}
-                        style={{
-                            'backgroundColor':'blue',
-                            'color': 'white',
-                            'fontSize': 16,
-                            'fontWeight': 'bolder',
-                            'border': 'none',
-                            'borderRadius': 10,
-                            'padding':5
-                        }}
-                    >Like</button>
+        
+                    <IconButton onClick={this.doLike}>
+                        <LikeIcon fontSize="large" />
+                    </IconButton>
                 </div>
-            </div>
+                </CardActions>
+            </Card>
         )
     }
 }

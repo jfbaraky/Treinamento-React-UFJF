@@ -27,7 +27,7 @@ class App extends Component {
         <div>
           <BrowserRouter>
             <Switch>
-              <Route path='/post/:time' component={PostDetails} />
+              <Route path='/post/:id' component={PostDetails} />
               <Route path='/sobre' component={this.aboutPage} />
               <Route exact path='/' component={Timeline}/>
               <Route path='*' component={this.showNotFound} />

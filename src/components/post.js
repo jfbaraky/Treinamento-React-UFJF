@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import LikeIcon from '@material-ui/icons/ThumbUp'
 import Avatar from '@material-ui/core/Avatar';
+import axios from 'axios';
 import "../post.css";
 
 class Post extends Component {
@@ -16,6 +17,7 @@ class Post extends Component {
             likes: props.post.initialLikes
         }
         this.doLike = this.doLike.bind(this);
+        this.saveLikesInAPI = this.saveLikesInAPI.bind(this);
     }
     doLike(){
         this.setState({likes: this.state.likes + 1},()=>{
@@ -24,6 +26,14 @@ class Post extends Component {
             this.saveLikesInStorage();
         });
     }
+    saveLikesInAPI(){
+        const post = this.props.post;
+        post.initialLikes = this.state.likes + 1;
+        axios.put('http://localhost:3001/posts/' + post.id, post).then(response => {
+            this.setState({likes: this.state.likes + 1});
+        })
+    }
+
     saveLikesInStorage(){
         const posts = JSON.parse(localStorage.getItem('savedPosts'));
         const updatePosts = posts.map(savedPost => {
@@ -63,7 +73,7 @@ class Post extends Component {
                 <div style={likeLine}>
                     <p>Likes: {this.state.likes}</p>
         
-                    <IconButton onClick={this.doLike}>
+                    <IconButton onClick={this.saveLikesInAPI}>
                         <LikeIcon fontSize="large" />
                     </IconButton>
                 </div>

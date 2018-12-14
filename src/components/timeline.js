@@ -55,7 +55,7 @@ class Timeline extends Component {
     }
 
     onNavigate(post){
-      this.props.history.push('/post/' + post.time);
+      this.props.history.push('/post/' + post.id);
     }
 
     render(){

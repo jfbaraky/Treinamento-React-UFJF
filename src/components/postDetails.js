@@ -29,6 +29,7 @@ class PostDetails extends Component {
         if(this.state.post === null){
             return (<div>Loding</div>)
         } else {
+   
             return(
                 <div>
                     <Post post={this.state.post} />
